@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:cache="http://www.springframework.org/schema/cache"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd"
+        >
+    
+    <!-- 启用spring mvc 注解-->
+   	<mvc:annotation-driven>
+		<!-- 启动JSON格式的配置 -->
+   		<mvc:message-converters>  
+   		<!-- 这里也可以自己定制class -->
+        <bean class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">  
+            <property name="supportedMediaTypes">  
+                <list>  
+                    <value>text/html;charset=UTF-8</value>  <!-- 避免IE出现下载JSON文件的情况 -->
+                </list>  
+            </property>    
+        </bean>  
+    </mvc:message-converters>  
+   	</mvc:annotation-driven>
+   	
+	<!-- 对静态资源文件的访问   缓存一年
+	<mvc:resources mapping="/default.htm" location="/default.htm"/>
+	<mvc:resources mapping="/juum/**" location="/juum/**" />
+	<mvc:resources mapping="/easyui/**" location="/easyui/**" />
+	<mvc:resources mapping="/error/**" location="/error/**" /> -->  
+	
+	<!-- 自动扫描的包名 ，使Spring支持自动检测组件，如注解的Controller-->
+    <context:component-scan base-package="com.crm.controller" />
+    <context:component-scan base-package="com.crm.service"/>
+    <bean name="springContextUtil" class="com.sojson.common.utils.SpringContextUtil" scope="singleton"></bean>
+	<!-- 视图解析器:定义跳转的文件的前后缀 -->  
+  <!--   <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">  
+        <property name="prefix" value="/juum/" />  
+        <property name="suffix" value=".htm" />  可为空,方便实现自已的依据扩展名来选择视图解释类的逻辑 
+    </bean>   -->
+ <!--    <bean id="viewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+		<property name="exposeRequestAttributes" value="true" />
+		<property name="exposeSessionAttributes" value="true" />
+		<property name="viewClass">
+			<value>org.springframework.web.servlet.view.freemarker.FreeMarkerView</value>
+		</property>
+		<property name="cache"><value>true</value></property>
+		<property name="suffix"><value>.htm</value></property>
+		<property name="contentType">
+			<value>text/html; charset=UTF-8</value>
+		</property>
+	</bean> -->
+    <!--<mvc:view-controller path="/" view-name="forward:/index.jsp"/>  -->
+  <!--   <beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+  这里配置的是freemarker
+	<bean id="freemarkerConfig"
+		  class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+		<property name="templateLoaderPath" value="/WEB-INF/views/juum/" />
+		<property name="freemarkerSettings">
+			<props>
+				<prop key="template_update_delay">0</prop>
+				<prop key="default_encoding">UTF-8</prop>
+				<prop key="number_format">0.##########</prop>
+				<prop key="datetime_format">yyyy-MM-dd HH:mm:ss</prop>
+				<prop key="classic_compatible">true</prop>
+				<prop key="template_exception_handler">ignore</prop>
+			</props>
+		</property>
+	</bean>
+</beans> -->
+    
+    <!-- 缓存配置(两种) -->  
+    <!-- 启用缓存注解功能(请将其配置在Spring主配置文件中) -->  
+   <!--  <cache:annotation-driven cache-manager="cacheManager"/>   -->
+    <!-- Spring自己的基于java.util.concurrent.ConcurrentHashMap实现的缓存管理器(该功能是从Spring3.1开始提供的) -->  
+    <!--   
+    <bean id="cacheManager" class="org.springframework.cache.support.SimpleCacheManager">  
+        <property name="caches">  
+            <set>  
+                <bean name="myCache" class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean"/>  
+            </set>  
+        </property>  
+    </bean>  
+     -->  
+    <!-- 若只想使用Spring自身提供的缓存器,则注释掉下面的两个关于Ehcache配置的bean,并启用上面的SimpleCacheManager即可 -->  
+    <!-- Spring提供的基于的Ehcache实现的缓存管理器 -->  
+    <!-- <bean id="cacheManagerFactory" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">  
+        <property name="configLocation" value="classpath:ehcache.xml"/>  
+    </bean>  
+    <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">  
+        <property name="cacheManager" ref="cacheManagerFactory"/>  
+    </bean> --> 
+    
+	<!--配置拦截器, 多个拦截器,顺序执行 --> 
+</beans>   

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>用户管理</title>
+	<link rel="stylesheet" type="text/css" href="../easyui/themes/black/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../easyui/themes/icon.css">
+	<link rel="stylesheet" type="text/css" href="../easyui/demo/demo.css">
+	<link rel="stylesheet" type="text/css" href="css/list.css">
+	
+	<script type="text/javascript" src="../easyui/jquery.min.js"></script>
+	<script type="text/javascript" src="../easyui/jquery.easyui.min.js"></script>
+	<!-- 引用EasyUI的国际化文件,让它显示中文 -->
+	<script src="../easyui/locale/easyui-lang-zh_CN.js" type="text/javascript"></script>
+	<!-- 引入easyui扩展 -->
+	<script src="javascript/extEasyUI.js" type="text/javascript"></script>
+	<!-- 扩展jQuery -->
+	<script src="javascript/extJquery.js" type="text/javascript"></script>
+	<script type="text/javascript" src="javascript/user.js"></script>
+</head>
+<body onload="pageInit()"class="easyui-layout" fit="true" >
+	<div region="center" border="false" style="overflow: hidden;">
+		<!-- 用户信息列表 title="用户管理" -->
+		<table id="datagrid"  class="easyui-datagrid"></table>
+		<!-- 按钮 -->
+		<div id="toolbar">
+			<a href="javascript:void(0);" class="easyui-linkbutton"
+				iconCls="icon-reload" plain="true" onclick="reload();">刷新</a>
+			<a href="javascript:void(0);" class="easyui-linkbutton"
+				iconCls="icon-add" plain="true" onclick="addUser();">新增</a> 
+			<a href="javascript:void(0);" class="easyui-linkbutton"
+				iconCls="icon-edit" plain="true" onclick="editUser();">编辑</a> 
+			<a href="javascript:void(0);" class="easyui-linkbutton"
+				iconCls="icon-remove" plain="true" onclick="deleteUser();">删除</a>
+			<span>用户名:</span><input id="search_username" value="" size=10 /> 
+  			<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search'"onclick="searchUserQ();">查询</a> 
+			<a href="javascript:void(0);" class="easyui-linkbutton"
+				iconCls="icon-jright" plain="true" onclick="searchUser();">更多查询</a>
+		</div>
+		
+
+		<!-- 添加/修改对话框 -->
+		<div id="dlg" class="easyui-dialog"
+			style="width:400px;height:400px;padding:30px 20px" closed="true"
+			buttons="#dlg-buttons">
+			<form id="fm" method="post" novalidate>
+				<div class="fitem">
+					<label>用户名:</label> <input name="username" class="easyui-validatebox tb" data-options="required:true">
+				</div>
+				<div class="fitem">
+					<label>密码:</label> <input name="password" class="easyui-validatebox tb" data-options="required:true">
+				</div>
+				<div class="fitem">
+					<label>身份证:</label> <input name="idcard" class="easyui-validatebox tb" data-options="required:true , validType:'idcard'">
+				</div>
+				<div class="fitem">
+					<label>性别:</label> 
+					<input type="radio" name="gender" id="gender" value="男" style="width:50px;">男</input>
+					<input type="radio" name="gender" id="gender" value="女" style="width:50px;">女</input>
+				</div>
+				<div class="fitem">
+					<label>入职时间:</label> <input name="regtime" type="text" class="easyui-datebox easyui-validatebox" required="required"/>
+				</div>
+				<div class="fitem">
+					<label>Email:</label> <input name="email" class="easyui-validatebox tb" data-options="required:true,validType:'email'">
+				</div>
+				<div class="fitem">
+					<label>QQ:</label> <input name="qq" class="easyui-textbox" >
+				</div>
+				<div class="fitem">
+					<label>微信:</label> <input name="weixin" class="easyui-textbox" >
+				</div>
+			</form>
+		</div>
+		
+		<!-- 添加/修改对话框按钮 -->
+		<div id="dlg-buttons">
+			<a href="javascript:void(0)" class="easyui-linkbutton c6"
+				iconCls="icon-ok" onclick="saveUser()" style="width:90px">保存</a> 
+				<a href="javascript:void(0)" class="easyui-linkbutton"
+				iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')"
+				style="width:90px">取消</a>
+		</div>
+		
+		<!-- 删除对话框 -->
+		<div id="dlg_delete" class="easyui-dialog"
+			style="width:300px;height:200px;padding:30px 20px" closed="true"
+			buttons="#dlg-del-buttons">
+			<div class="ftitle">请谨慎操作</div>
+			<form id="fm" method="post" novalidate>
+					<label>确定删除用户吗？</label>
+			</form>
+		</div>
+		
+		<!-- 删除对话框按钮 -->
+		<div id="dlg-del-buttons">
+			<a href="javascript:void(0)" class="easyui-linkbutton c6"
+				iconCls="icon-ok" onclick="saveUser_del()" style="width:90px">删除</a> 
+			<a href="javascript:void(0)" class="easyui-linkbutton"
+				iconCls="icon-cancel" onclick="javascript:$('#dlg_delete').dialog('close')"
+				style="width:90px">取消</a>
+		</div>
+		
+		<!-- 查询对话框 -->
+		<div id="dlgsearch" class="easyui-dialog"
+			style="width:400px;height:380px;padding:30px 20px" closed="true"
+			buttons="#dlg-buttons">
+			<form id="fmsearch" method="post" novalidate>
+				<div class="fitem">
+					<label>用户名:</label> <input name="username" id="username" class="easyui-textbox" >
+				</div>
+				<div class="fitem">
+					<label>身份证:</label> <input name="idcard" id="idcard" class="easyui-textbox" >
+				</div>
+				<div class="fitem">
+					<label>性别:</label> 
+					<input type="radio" name="gender" id="gender" value="" style="width:30px;">全部</input>
+					<input type="radio" name="gender" id="gender" value="男" style="width:30px;">男</input>
+					<input type="radio" name="gender" id="gender" value="女" style="width:30px;">女</input>
+				</div>
+				<div class="fitem">
+					<label>入职时间:</label> <input name="regtime" type="text" class="easyui-datebox" />
+				</div>
+				<div class="fitem">
+					<label>至</label> <input name="regtime" type="text" class="easyui-datebox" />
+				</div>
+				<div class="fitem">
+					<label>Email:</label> <input name="email" class="easyui-textbox" >
+				</div>
+				<div class="fitem">
+					<label>QQ:</label> <input name="qq" class="easyui-textbox" >
+				</div>
+				<div class="fitem">
+					<label>微信:</label> <input name="weixin" class="easyui-textbox" >
+				</div>
+			</form>
+		</div>
+		
+		<!-- 查询对话框按钮 -->
+		<div id="dlg-buttons">
+			<a href="javascript:void(0)" class="easyui-linkbutton c6"
+				iconCls="icon-ok" onclick="serach_User()" style="width:90px">查询</a> 
+				<a href="javascript:void(0)" class="easyui-linkbutton"
+				iconCls="icon-cancel" onclick="javascript:$('#dlgsearch').dialog('close')"
+				style="width:90px">取消</a>
+		</div>
+	
+	</div>
+</body>
+</html>

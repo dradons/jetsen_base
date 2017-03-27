@@ -26,11 +26,11 @@
     </mvc:message-converters>  
    	</mvc:annotation-driven>
    	
-	<!-- 对静态资源文件的访问   缓存一年
+	<!-- 对静态资源文件的访问   缓存一年--> 
 	<mvc:resources mapping="/default.htm" location="/default.htm"/>
-	<mvc:resources mapping="/juum/**" location="/juum/**" />
-	<mvc:resources mapping="/easyui/**" location="/easyui/**" />
-	<mvc:resources mapping="/error/**" location="/error/**" /> -->  
+	<mvc:resources mapping="/juum/**" location="/juum/" />
+	<mvc:resources mapping="/easyui/**" location="/easyui/" />
+	<mvc:resources mapping="/error/**" location="/error/" /> 
 	
 	<!-- 自动扫描的包名 ，使Spring支持自动检测组件，如注解的Controller-->
     <context:component-scan base-package="com.crm.controller" />

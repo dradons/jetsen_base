@@ -3,9 +3,9 @@
 	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
 	version="3.0">
-	<servlet-mapping> <servlet-name>default</servlet-name> <url-pattern>/default.htm</url-pattern> 
+	<!-- <servlet-mapping> <servlet-name>default</servlet-name> <url-pattern>/default.htm</url-pattern> 
 		<url-pattern>/easyui/*</url-pattern> <url-pattern>/juum/*</url-pattern> <url-pattern>/error/*</url-pattern> 
-		</servlet-mapping>
+		</servlet-mapping> -->
 	<context-param>
 		<param-name>spring.profiles.active</param-name>
 		<param-value>dev</param-value>

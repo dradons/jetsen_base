@@ -97,5 +97,14 @@
         <property name="cacheManager" ref="cacheManagerFactory"/>  
     </bean> --> 
     
-	<!--配置拦截器, 多个拦截器,顺序执行 --> 
+		<!--配置拦截器, 多个拦截器,顺序执行 --> 
+	<mvc:interceptors>  
+		<mvc:interceptor>  
+			<mvc:mapping path="/**.action" />
+			<mvc:exclude-mapping path="/code"/> 
+			<mvc:exclude-mapping path="/logout"/>  
+			
+			<bean class="com.crm.interceptor.CommonInterceptor"></bean>  
+		</mvc:interceptor>
+	</mvc:interceptors>
 </beans>   

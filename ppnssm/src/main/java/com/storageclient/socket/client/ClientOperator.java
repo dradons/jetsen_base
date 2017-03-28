@@ -81,11 +81,12 @@ public class ClientOperator implements Runnable{
 	/**
 	 * socket 上报目录数据
 	 * @param data
+	 * @param clientPort
 	 */
-	public static void reportData(String data){
+	public static void reportData(String data,String ip,int clientPort){
 		Socket client;
 		try {
-			client = new Socket("127.0.0.1", 10000);
+			client = new Socket(ip, clientPort);
 			ClientOperator op = new ClientOperator(client,data);
 			op.run();
 		} catch (UnknownHostException e) {

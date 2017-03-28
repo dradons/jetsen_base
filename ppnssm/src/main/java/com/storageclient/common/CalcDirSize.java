@@ -5,15 +5,17 @@ import java.io.File;
 public class CalcDirSize {
 	private static final String fileDir ="E:\\logs";
 
-	public static String recursiveSearch() {
-		File file = new File(fileDir);
+	public static String recursiveSearch(String filedir) {
+		File file = new File(filedir);
 		StringBuilder sb = new StringBuilder();
 		
 		File[] filesList = file.listFiles();
 		for (File f : filesList) {
 			if (f.isDirectory() && !f.isHidden()) {
-				sb.append("<dir>").append(f.getName()).append("<dir>");
+				sb.append("<dir>");
+				sb.append("<dirname>").append(f.getName()).append("<dirname>");
 				sb.append("<dirsize>").append(folderSize(f)).append("<dirsize>");
+				sb.append("</dir>");
 			}
 		}
 		return sb.toString();

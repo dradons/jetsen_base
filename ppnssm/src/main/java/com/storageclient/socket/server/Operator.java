@@ -8,13 +8,16 @@ import java.net.Socket;
 
 import org.apache.log4j.Logger;
 
+import com.storageclient.StorageMain;
 import com.storageclient.common.ByteOper;
 import com.storageclient.common.CalcDirSize;
 public class Operator implements Runnable{
 	private static Logger logger = Logger.getLogger(Operator.class);
 	private static final String code = "gbk";
-	public Operator(Socket client){
+	private static String fileDir = "E:\\logs";
+	public Operator(Socket client,String filedir){
 		this.client = client;
+		this.fileDir = filedir;
 	}
 	private Socket client;
 	@Override
@@ -44,8 +47,8 @@ public class Operator implements Runnable{
 			out.close();
 			logger.info("JSW接收请求体--:"+reqStr);
 			// 接收数据后业务处理
-			String resultString = CalcDirSize.recursiveSearch();
-			
+			String resultString = CalcDirSize.recursiveSearch(fileDir);
+			resultString = StorageMain.generateDateXml(resultString);
 			
 			logger.info("JSW回复报文体--:"+resultString);
 			logger.info("JSW回复报文长度--:"+resultString.getBytes(code).length);

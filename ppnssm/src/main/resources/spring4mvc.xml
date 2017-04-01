@@ -34,47 +34,7 @@
 	
 	<!-- 自动扫描的包名 ，使Spring支持自动检测组件，如注解的Controller-->
     <context:component-scan base-package="com.crm.controller" />
-    <context:component-scan base-package="com.crm.service"/>
-    <bean name="springContextUtil" class="com.sojson.common.utils.SpringContextUtil" scope="singleton"></bean>
-	<!-- 视图解析器:定义跳转的文件的前后缀 -->  
-  <!--   <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">  
-        <property name="prefix" value="/juum/" />  
-        <property name="suffix" value=".htm" />  可为空,方便实现自已的依据扩展名来选择视图解释类的逻辑 
-    </bean>   -->
- <!--    <bean id="viewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
-		<property name="exposeRequestAttributes" value="true" />
-		<property name="exposeSessionAttributes" value="true" />
-		<property name="viewClass">
-			<value>org.springframework.web.servlet.view.freemarker.FreeMarkerView</value>
-		</property>
-		<property name="cache"><value>true</value></property>
-		<property name="suffix"><value>.htm</value></property>
-		<property name="contentType">
-			<value>text/html; charset=UTF-8</value>
-		</property>
-	</bean> -->
-    <!--<mvc:view-controller path="/" view-name="forward:/index.jsp"/>  -->
-  <!--   <beans xmlns="http://www.springframework.org/schema/beans"
-	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	   xsi:schemaLocation="http://www.springframework.org/schema/beans
-	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
-  这里配置的是freemarker
-	<bean id="freemarkerConfig"
-		  class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
-		<property name="templateLoaderPath" value="/WEB-INF/views/juum/" />
-		<property name="freemarkerSettings">
-			<props>
-				<prop key="template_update_delay">0</prop>
-				<prop key="default_encoding">UTF-8</prop>
-				<prop key="number_format">0.##########</prop>
-				<prop key="datetime_format">yyyy-MM-dd HH:mm:ss</prop>
-				<prop key="classic_compatible">true</prop>
-				<prop key="template_exception_handler">ignore</prop>
-			</props>
-		</property>
-	</bean>
-</beans> -->
-    
+	<context:component-scan base-package="com.sojson.*.controller;com.sojson.*.*.controller"/>
     <!-- 缓存配置(两种) -->  
     <!-- 启用缓存注解功能(请将其配置在Spring主配置文件中) -->  
    <!--  <cache:annotation-driven cache-manager="cacheManager"/>   -->
@@ -97,14 +57,4 @@
         <property name="cacheManager" ref="cacheManagerFactory"/>  
     </bean> --> 
     
-		<!--配置拦截器, 多个拦截器,顺序执行 --> 
-	<mvc:interceptors>  
-		<mvc:interceptor>  
-			<mvc:mapping path="/**.action" />
-			<mvc:exclude-mapping path="/code"/> 
-			<mvc:exclude-mapping path="/logout"/>  
-			
-			<bean class="com.crm.interceptor.CommonInterceptor"></bean>  
-		</mvc:interceptor>
-	</mvc:interceptors>
 </beans>   

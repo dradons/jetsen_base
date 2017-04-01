@@ -20,6 +20,25 @@
 	 $('#mainMenu').tree({
 			url : '../getMenu.action',
 			parentField : 'pid',
+			onLoadError:function(arguments){},
+			onLoadSuccess:function (node, data){
+				var tempdata = data.message;
+				if("undefined"!=typeof(tempdata)){
+					$.messager.confirm('操作提示',tempdata,function(data){
+						if(data){
+							var url = "../juum/login.htm";
+		 	   				window.location = url;
+						}else{
+							var url = "../juum/login.htm";
+		 	   				window.location = url;
+						}
+					})
+				}else{
+					
+					alert("不处理跳转页面")
+				}
+				//window.location="../juum/login.htm";
+			},
 			onClick : function(node) {
 				if (node.attributes.url) {
 					var src = "../" + node.attributes.url;

@@ -152,7 +152,7 @@
 	
 	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
 		<property name="securityManager" ref="securityManager" />
-		<property name="loginUrl" value="login.action" />
+		<property name="loginUrl" value="/juum/login.htm" />
 		<!--	TODO 待提取	-->
 		<property name="successUrl" value="/juum/index.htm" />
 		<property name="unauthorizedUrl" value="/juum/login.htm" />

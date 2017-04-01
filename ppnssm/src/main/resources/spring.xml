@@ -23,11 +23,10 @@
 			</list>
 		</property>
 	</bean>
-	
-	
+	<bean name="springContextUtil" class="com.sojson.common.utils.SpringContextUtil" scope="singleton"></bean>
 	<import resource="spring-dao.xml"/>
-	<!-- <import resource="spring-cache.xml"/>
-	<import resource="spring-shiro.xml"/> -->
+	<import resource="spring-cache.xml"/>
+	<import resource="spring-shiro.xml"/>
 	<!-- 定时任务，运行去掉
 	<import resource="spring-timer.xml"/>
 	 -->

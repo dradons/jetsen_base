@@ -5,12 +5,9 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
-    
-    <!-- 该包下的类支持注解，表示会被当作{@code mybatis mapper}处理 配置了之后表示可以自动引入mapper类-->
-   <!--  <mybatis:scan base-package="com.crm.dao"/> -->
-    <!--引入属性文件 -->
-   <!--  <context:property-placeholder location="classpath:configuration.properties"/> -->
-    
+    <!-- 自动扫描(自动注入) -->
+	<context:component-scan base-package="com.sojson.*.service;com.sojson.*.*.service"/>
+	<context:component-scan base-package="com.crm.service"/>
 	<!--数据库连接-->
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close"> 
 	    <property name="url" value="${jdbc.url}" />
@@ -29,15 +26,6 @@
 	    <property name="timeBetweenEvictionRunsMillis" value="${jdbc.timeBetweenEvictionRunsMillis}"/>
 	    <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
 	    <property name="minEvictableIdleTimeMillis" value="${jdbc.minEvictableIdleTimeMillis}"/>
-		
-		<!--
-	    <property name="validationQuery"><value>SELECT 'x'</value></property>
-	    <property name="testWhileIdle"><value>true</value></property>
-	    <property name="testOnBorrow"><value>false</value></property>
-	    <property name="testOnReturn"><value>false</value></property>
-	    <property name="poolPreparedStatements"><value>true</value></property>
-	    <property name="maxOpenPreparedStatements"><value>20</value></property>
-	     -->
  	</bean>
  	
  	<!-- mybatis配置 -->

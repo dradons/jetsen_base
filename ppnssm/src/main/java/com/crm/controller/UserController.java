@@ -55,7 +55,7 @@ public class UserController {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value="/user/datagrid", method = RequestMethod.POST)
+	@RequestMapping(value="/user/datagrid.action", method = RequestMethod.POST)
 	public DataGrid datagrid(PageHelper page,User user,Integer sysid) {
 		DataGrid dg = new DataGrid();
 		dg.setTotal(userService.getDatagridTotal(user,sysid));

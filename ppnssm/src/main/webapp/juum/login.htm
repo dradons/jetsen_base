@@ -34,15 +34,6 @@
 					<input type="password" name="password" id="password" class="easyui-validatebox tb" data-options="required:true" />
 					&nbsp;<span id="pwderr" class="errInfo"></span>
 				</div>
-				<div class="login_info">
-					<label>验证码：</label>
-					<input type="text" name="code" id="code"class="easyui-validatebox tb" data-options="required:true"/>
-					&nbsp;<span id="codeerr" class="errInfo"></span>
-				</div>
-				<div class="login_info">
-					<label>　　　　</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<img id="codeImg" alt="点击更换" title="点击更换" src=""/>
-				</div>
 				<p>
 				<div class="login_info">
 					<input type="button" name="loginBtn" id="loginBtn" value="登录" class="btn" onclick="login()"/>
@@ -68,23 +59,11 @@
 		</div>
 	</div>
 	<div class="bottom">
-		Copyright &copy; 2015 
+		Copyright &copy; 2017 
 	</div>
 </div>
 	<script type="text/javascript">
 		$(document).ready(function(){
-			changeCode();
-			$("#codeImg").bind("click",changeCode);
-			if(errInfo!=""){
-				if(errInfo.indexOf("验证码")>-1){
-					$("#codeerr").show();
-					$("#codeerr").html(errInfo);
-					$("#code").focus();
-				}else{
-					$("#nameerr").show();
-					$("#nameerr").html(errInfo);
-				}
-			}
 			$("#loginname").focus();
 		});
 	
@@ -93,47 +72,6 @@
 			return time.getTime();
 		}
 	
-		function changeCode(){
-			$("#codeImg").attr("src","../code.action?t="+genTimestamp());
-		}
-		
-		function resetErr(){
-			$("#nameerr").hide();
-			$("#nameerr").html("");
-			$("#pwderr").hide();
-			$("#pwderr").html("");
-			$("#codeerr").hide();
-			$("#codeerr").html("");
-		}
-		
-		function check(){
-			
-			/* 
-			resetErr();
-			if($("#loginname").val()==""){
-				$("#nameerr").show();
-				$("#nameerr").html("用户名不得为空！");
-				$("#loginname").focus();
-				return false;
-			}
-			if($("#password").val()==""){
-				$("#pwderr").show();
-				$("#pwderr").html("密码不得为空！");
-				$("#password").focus();
-				return false;
-			}
-			if($("#code").val()==""){
-				$("#codeerr").show();
-				$("#codeerr").html("验证码不得为空！");
-				$("#code").focus();
-				return false;
-			} */
-			if($(".autologin").is(":checked")){
-		    	$(".autologinch").val("Y");
-		    }
-			return true;
-		}
-		
 		function login(){
 			if($(".autologin").is(":checked")){
 		    	$(".autologinch").val("Y");
@@ -146,7 +84,7 @@
 	 		};
 			if($('#loginForm').form('validate')){
 				$.ajax({
-		 	        url : "../loginjson",// 后台处理方法
+		 	        url : "../loginjson.action",// 后台处理方法
 		 	        dataType : "json",
 		 	        type:"POST",
 		 	        headers : {
@@ -166,7 +104,6 @@
 		 	        },
 		 	    });
 			} 
-			//document.loginForm.submit();
 		}    	
 	</script>
 </body>

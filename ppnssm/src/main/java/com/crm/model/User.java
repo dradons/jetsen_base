@@ -3,12 +3,15 @@
  */
 package com.crm.model;
 
+import java.io.Serializable;
+
 
 /**
  * @author zh
  * 2014-8-1
  */
-public class User{
+public class User implements Serializable{
+	private static final long serialVersionUID = 1L;
 	/**
 	 * 
 	 */

@@ -21,7 +21,7 @@ var gUserColumns = [[{ field: "username", title:'用户名',width:"100",sortable
 
 function pageInit(){
 	$('#datagrid').datagrid({
-	    url:"../user/datagrid", 
+	    url:"../user/datagrid.action", 
 	    toolbar:"#toolbar",
 	    fit:true,
 	    pagination:true,

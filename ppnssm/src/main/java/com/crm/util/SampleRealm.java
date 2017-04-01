@@ -1,9 +1,7 @@
-package com.sojson.core.shiro.token;
+package com.crm.util;
 
 import java.util.HashSet;
 import java.util.Set;
-
-import javax.annotation.Resource;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AccountException;
@@ -21,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.crm.model.User;
 import com.crm.service.UserService;
 import com.sojson.common.utils.SpringContextUtil;
+import com.sojson.core.shiro.token.ShiroToken;
 import com.sojson.core.shiro.token.manager.TokenManager;
 
 
@@ -57,7 +56,7 @@ public class SampleRealm extends AuthorizingRealm {
 			AuthenticationToken authcToken) throws AuthenticationException {
 		
 		ShiroToken token = (ShiroToken) authcToken;
-//		UserService userService = (UserService)SpringContextUtil.getBean("userService");
+		UserService userService = (UserService)SpringContextUtil.getBean("userService");
 		User user = userService.findUserByName(token.getUsername());
 		if(null == user&&(user.getPassword().equals(token.getPswd()))){
 			throw new AccountException("帐号或密码不正确！");

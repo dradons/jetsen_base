@@ -14,8 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.shiro.authc.DisabledAccountException;
-import org.apache.shiro.authc.IncorrectCredentialsException;
-import org.apache.shiro.authc.UnknownAccountException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -31,7 +29,6 @@ import com.crm.model.User;
 import com.crm.model.easyui.Json;
 import com.crm.model.easyui.Tree;
 import com.crm.service.UserService;
-import com.crm.util.RequestUtil;
 import com.crm.util.UserCookieUtil;
 import com.crm.util.common.Const;
 import com.sojson.core.shiro.token.manager.TokenManager;
@@ -46,54 +43,29 @@ public class SystemController extends BaseController {
 	@Resource
 	private UserService userService;
 	
-	/*@RequestMapping(value = "/",method = RequestMethod.GET)
-	public String home() {
-		log.info("返回首页！");
-		return "login.htm";
-	}*/
-	
-    /*@RequestMapping(value = "/login",method = RequestMethod.POST)
-    public String login(HttpServletRequest request,HttpServletResponse response,
+    @ResponseBody
+    @RequestMapping(value = "/loginjson",method = RequestMethod.POST)
+    public Json login(HttpServletRequest request,HttpServletResponse response,
     		@RequestParam String loginname, @RequestParam String password, 
-    		@RequestParam String code,@RequestParam String autologinch) throws Exception{
-    	
-		if (code.toLowerCase().equals(request.getSession().getAttribute("RANDOMCODE").toString().toLowerCase())){
-			User user = userService.findUserByName(loginname);
-			if (user == null) {
-				log.info("登陆用户名不存在");  
-	    		request.getSession().setAttribute("message", "用户名不存在，请重新登录");
-	    		return "redirect:juum/login.htm"; 
-			}else {
-				if (user.getPassword().equals(password)) {
-					
-					if(autologinch!=null && autologinch.equals("Y")){ // 判断是否要添加到cookie中
-						// 保存用户信息到cookie
-						UserCookieUtil.saveCookie(user, response);
-					}
-					
-					// 保存用信息到session
-					request.getSession().setAttribute(Const.SESSION_USER, user);  
-	        		return "redirect:" + RequestUtil.retrieveSavedRequest();//跳转至访问页面
-					
-				}else {
-					log.info("登陆密码错误");  
-	        		request.getSession().setAttribute("message", "用户名密码错误，请重新登录");
-	        		return "redirect:juum/login.htm"; 
-				}
-			}
-		}else {
-			request.getSession().setAttribute("message", "验证码错误，请重新输入");
-    		return "redirect:juum/login.htm"; 
+    		@RequestParam String autologinch) throws Exception{
+    	Json result = new Json();
+    	try{
+    		TokenManager.login(loginname,password,false);
+        	log.info(loginname+"登陆成功!"); 
+    		result.setSuccess(true);
+    		result.setMsg("登陆成功!");
+    	}catch(DisabledAccountException e) {
+    		result.setSuccess(false);
+    		result.setMsg("登陆用户名不存在!");
+		} catch (Exception e) {
+			result.setSuccess(false);
+    		result.setMsg("帐号或密码错误!");
 		}
-    }*/
-    
-    @RequestMapping(value = "/login",method=RequestMethod.GET)
-    public String login(){
-    	return "login"; 
+    	return result; 
     }
     
     @ResponseBody
-    @RequestMapping(value = "/loginjson",method = RequestMethod.POST)
+    @RequestMapping(value = "/login",method = RequestMethod.POST)
     public Json login2(HttpServletRequest request,HttpServletResponse response,
     		@RequestParam String loginname, @RequestParam String password, 
     		@RequestParam String code,@RequestParam String autologinch) throws Exception{
